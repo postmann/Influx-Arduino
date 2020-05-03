@@ -7,8 +7,8 @@ public:
   InfluxArduino();
   ~InfluxArduino();
 
-  //specify the database, IP address and port (optional) for the database
-  void configure(const char database[], const char host[], const uint16_t port = 8086);
+  //specify the database, IP address and (optionally) port and path (must have trailing "/") for the database
+  void configure(const char database[], const char host[], const uint16_t port = 8086, const char path[] = "/");
 
   //if you require authorization to write to InfluxDB, set the username and password here
   void authorize(const char username[],const char password[]);
@@ -57,6 +57,7 @@ private:
   char* _database;
   char* _host;
   uint16_t _port;
+  char* _path;
 
   char* _username;
   char* _password;

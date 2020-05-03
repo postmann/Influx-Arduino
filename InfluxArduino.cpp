@@ -9,7 +9,7 @@ InfluxArduino::~InfluxArduino()
 {
 }
 
-void InfluxArduino::configure(const char database[],const char host[],const uint16_t port)
+void InfluxArduino::configure(const char database[],const char host[],const uint16_t port,const char path[])
 {   
     //copy these strings to private class pointers for future use
 
@@ -18,6 +18,8 @@ void InfluxArduino::configure(const char database[],const char host[],const uint
     _host = new char[strlen(host)+1];
     strcpy(_host,host);
     _port = port;
+    _path = new char[strlen(path)+1];
+    strcpy(_path,path);
 }
 
 void InfluxArduino::addCertificate(const char cert[])
@@ -50,7 +52,7 @@ bool InfluxArduino::write(const char *measurement,const char *tagString,const ch
 {   
     HTTPClient http;
     char uri[32];
-    sprintf(uri, "/write?db=%s", _database);
+    sprintf(uri, "%swrite?db=%s", _path, _database);
 
     if(_isSecure)
     {
